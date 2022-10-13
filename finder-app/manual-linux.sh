@@ -47,9 +47,9 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} mrproper
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} defconfig
 
-    # yylloc & treesource_error should be decleard as extern, otherwith there will be compilation errors
-    sed -i 's/^YYLTYPE yylloc;/extern YYLTYPE yylloc;/' scripts/dtc/dtc-lexer.lex.c
-    sed -i 's/^bool treesource_error;/extern bool treesource_error;/' scripts/dtc/dtc-lexer.lex.c
+    # yylloc & treesource_error should be decleard as extern, otherwith there will be linking errors
+    sed -i 's/^YYLTYPE yylloc;/extern YYLTYPE yylloc;/' ${OUTDIR}/linux-stable/scripts/dtc/dtc-lexer.lex.c
+    sed -i 's/^bool treesource_error;/extern bool treesource_error;/' ${OUTDIR}/linux-stable/scripts/dtc/dtc-lexer.lex.c
     
     make -j4 ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} all
     make ARCH=${ARCH} CROSS_COMPILE=${CROSS_COMPILE} modules
