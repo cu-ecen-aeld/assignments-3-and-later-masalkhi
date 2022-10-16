@@ -69,8 +69,10 @@ fi
 
 mkdir ${OUTDIR}/rootfs
 cd ${OUTDIR}/rootfs
-mkdir bin dev etc home lib lib64 proc sbin sys tmp usr var
-mkdir usr/bin usr/lib usr/sbin
+mkdir bin dev etc home lib proc sbin sys tmp usr var
+ln -s lib lib64
+ln -s ../lib usr/lib 
+mkdir usr/bin usr/sbin
 mkdir -p var/log
 
 
@@ -109,8 +111,6 @@ do
     LIB=$(find $SYSROOT -name "$(basename $LIB)" | sed -r 's/ //g')
     REALLIB=$(readlink -f $LIB | sed -r 's/ //g')
     cp -an ${LIB} ${REALLIB} "${OUTDIR}/rootfs/lib/"
-    ln -s "../lib/$(basename $LIB)" "${OUTDIR}/rootfs/lib64/$(basename $LIB)" 
-    ln -s "../lib/$(basename $REALLIB)" "${OUTDIR}/rootfs/lib64/$(basename $REALLIB)"
 done
 
 
